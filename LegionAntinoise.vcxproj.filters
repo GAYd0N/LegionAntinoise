@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="miniaudio">
+      <UniqueIdentifier>{5773f211-1e74-4542-9b4e-6a539e91704f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{d9dd5634-39d9-4724-a1b2-d254bd85743b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="miniaudio\miniaudio.c">
+      <Filter>miniaudio</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="miniaudio\miniaudio.h">
+      <Filter>miniaudio</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
