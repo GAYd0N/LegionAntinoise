@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "miniaudio.h"
 
-// ºóÌ¨ÔËĞĞ
+// åå°è¿è¡Œ
 #pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" )
 
 void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
@@ -18,7 +18,6 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 
     ma_waveform_read_pcm_frames(pWave, pOutput, frameCount, NULL);
 
-    (void)pInput;   /* Unused. */
 }
 
 int main(int argc, char** argv)
@@ -44,21 +43,21 @@ int main(int argc, char** argv)
         return -3;
     }
 
-    // ³õÊ¼»¯Éè±¸ÅäÖÃ
+    // åˆå§‹åŒ–è®¾å¤‡é…ç½®
     deviceConfig = ma_device_config_init(ma_device_type_playback);
     deviceConfig.playback.format = ma_format_u8;
     deviceConfig.playback.channels = 2;
     deviceConfig.sampleRate = 0;
     deviceConfig.dataCallback = data_callback;
     deviceConfig.pUserData = &Wave;
-
-	// Ñ¡ÔñÑïÉùÆ÷
+    
+	// é€‰æ‹©æ‰¬å£°å™¨
     printf("Playback Devices\n");
     for (int iDevice = 0; iDevice < playbackDeviceCount; ++iDevice) {
         ma_device_info iter = pPlaybackDeviceInfos[iDevice];
         std::string name = iter.name;
         printf("    %d: %s\n", iDevice, name.c_str());
-        if (name.find("ÑïÉùÆ÷"))
+        if (name.find("æ‰¬å£°å™¨") != std::string::npos)
         {
             deviceConfig.playback.pDeviceID = &iter.id;
             break;
@@ -70,7 +69,7 @@ int main(int argc, char** argv)
         return -3;
     }
 
-    //ÎŞÉùÒôÆµ
+    //æ— å£°éŸ³é¢‘
     WaveConfig = ma_waveform_config_init(
         device.playback.format, 
         device.playback.channels, 
@@ -79,6 +78,8 @@ int main(int argc, char** argv)
         0, 0);
 
     ma_waveform_init(&WaveConfig, &Wave);
+
+    ma_data_source_set_looping(&Wave, MA_TRUE);
 
     if (ma_device_start(&device) != MA_SUCCESS) {
         printf("Failed to start playback device.\n");
