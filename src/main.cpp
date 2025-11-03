@@ -3,6 +3,7 @@
 
 #include <thread>
 #include <chrono>
+#include <string>
 #include <stdio.h>
 #include "miniaudio.h"
 
@@ -12,7 +13,6 @@
 void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
 {
     ma_waveform* pWave;
-
 
     pWave = (ma_waveform*)pDevice->pUserData;
 
@@ -56,8 +56,9 @@ int main(int argc, char** argv)
     printf("Playback Devices\n");
     for (int iDevice = 0; iDevice < playbackDeviceCount; ++iDevice) {
         ma_device_info iter = pPlaybackDeviceInfos[iDevice];
-        printf("    %d: %s\n", iDevice, iter.name);
-        if (strstr(iter.name, "ÑïÉùÆ÷") || strstr(iter.name, "speaker"))
+        std::string name = iter.name;
+        printf("    %d: %s\n", iDevice, name.c_str());
+        if (name.find("ÑïÉùÆ÷"))
         {
             deviceConfig.playback.pDeviceID = &iter.id;
             break;
