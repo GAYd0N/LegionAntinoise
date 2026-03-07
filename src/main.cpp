@@ -53,15 +53,20 @@ int main(int argc, char** argv)
     
 	// 选择扬声器
     printf("Playback Devices\n");
+    ma_device_id* speakerDeviceId = nullptr;
     for (int iDevice = 0; iDevice < playbackDeviceCount; ++iDevice) {
-        ma_device_info iter = pPlaybackDeviceInfos[iDevice];
-        std::string name = iter.name;
+        ma_device_info info = pPlaybackDeviceInfos[iDevice];
+        std::string name = info.name;
         printf("    %d: %s\n", iDevice, name.c_str());
         if (name.find("扬声器") != std::string::npos)
         {
-            deviceConfig.playback.pDeviceID = &iter.id;
+            speakerDeviceId = &pPlaybackDeviceInfos[iDevice].id;
             break;
         }
+    }
+    
+    if (speakerDeviceId != nullptr) {
+        deviceConfig.playback.pDeviceID = speakerDeviceId;
     }
 
     if (ma_device_init(&context, &deviceConfig, &device) != MA_SUCCESS) {
